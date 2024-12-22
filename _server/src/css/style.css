@@ -158,6 +158,32 @@ a {
   flex: 0 0 100%;
   max-width: 100%;
 }
+.bg-parallax {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+}
+.bg-parallax .bg-parallax-video {
+  width: 100%;
+  height: 100vh;
+  -o-object-fit: cover;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+.bg-parallax::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 50%);
+  background-size: 4px 4px;
+}
+
 .header {
   position: fixed;
   z-index: 10;
@@ -214,6 +240,39 @@ a {
 }
 .btn:hover {
   box-shadow: 0 0 18px 5px rgba(0, 255, 174, 0.6);
+}
+
+.mv {
+  position: relative;
+  height: 100vh;
+}
+
+.mv-title-area {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  color: #fff;
+  transform: translateY(-50%);
+}
+.mv-title-area .mv-label {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  margin-bottom: 30px;
+}
+.mv-title-area .mv-title {
+  font-size: 140px;
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.mv-title-area .mv-subtitle {
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 1em;
+  margin-bottom: 50px;
 }
 @media (max-width: 576px) {
   .container {

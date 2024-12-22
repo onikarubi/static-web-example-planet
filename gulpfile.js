@@ -29,6 +29,7 @@ const srcPath = {
   js: `${srcBase}/js/**/*.js`,
   php: `${srcBase}/**/*.php`,
   font: `${srcBase}/font/**/*`,
+  video: `${srcBase}/assets/video/**/*`,
 };
 
 const serverPath = {
@@ -38,6 +39,7 @@ const serverPath = {
   js: `${serverBase}/js/`,
   php: `${serverBase}/`,
   font: `${serverBase}/font/`,
+  video: `${serverBase}/assets/video/`,
 };
 
 const distPath = {
@@ -47,6 +49,7 @@ const distPath = {
   js: `${distBase}/js/`,
   php: `${distBase}/`,
   font: `${distBase}/font/`,
+  video: `${distBase}/assets/video/`,
 };
 
 const browserSyncOption = {
@@ -74,6 +77,12 @@ const copyToDistAndServer = (src, dist, server) => {
     .src(src)
     .pipe(gulp.dest(dist))
     .pipe(gulp.dest(server));
+};
+
+const copyToDist = (src, dist) => {
+  return gulp
+    .src(src, { encoding: false })
+    .pipe(gulp.dest(dist));
 };
 
 /**
@@ -167,6 +176,14 @@ export const copyFont = () => {
 };
 
 /**
+ * 動画コピー
+ */
+export const copyVideo = () => {
+  ensureDir(`${srcBase}/assets/video`);
+  return copyToDist(srcPath.video, distPath.video);
+};
+
+/**
  * ブラウザ同期起動
  */
 export const browserSyncFunc = () => {
@@ -192,6 +209,7 @@ export const watchFiles = () => {
   gulp.watch(srcPath.img, gulp.series(optimizeImages, browserSyncReload));
   gulp.watch(srcPath.php, gulp.series(copyPhp, browserSyncReload));
   gulp.watch(srcPath.font, gulp.series(copyFont, browserSyncReload));
+  gulp.watch(srcPath.video, gulp.series(copyVideo, browserSyncReload));
 };
 
 /**
@@ -199,7 +217,7 @@ export const watchFiles = () => {
  */
 const build = gulp.series(
   clean,
-  gulp.parallel(copyHtml, compileSass, compilePug, copyJs, optimizeImages, copyPhp, copyFont)
+  gulp.parallel(copyHtml, compileSass, compilePug, copyJs, optimizeImages, copyPhp, copyFont, copyVideo)
 );
 
 export default gulp.series(
